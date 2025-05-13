@@ -25,10 +25,10 @@ def extract_price(text):
     match = re.search(r'\$?(\d+)', text)
     if match:
         return int(match.group(1))
-    return 9999 # if no budget specified, assume infinite
+    return 9999     # if no budget specified, assume infinite
 
 
-prefs = pd.read_csv("./input_data/2103 Housing Form Results - Sample2.csv")
+prefs = pd.read_csv("./input_data/2103 Housing Form Results.csv")
 
 cost_matrix = np.full((N, N), fill_value=100)   # default high cost
 
@@ -49,7 +49,7 @@ for i, row in prefs.iterrows():
             cost_matrix[i][j] = rank
 
 # Step 2: Find the optimal total cost
-row_ind, col_ind = linear_sum_assignment(cost_matrix) # Hungarian Algorithm
+row_ind, col_ind = linear_sum_assignment(cost_matrix)   # Hungarian Algorithm
 # https://en.wikipedia.org/wiki/Hungarian_algorithm
 optimal_cost = cost_matrix[row_ind, col_ind].sum()
 average_rating = f"{(optimal_cost / N):.2f}"
